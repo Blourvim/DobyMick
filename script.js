@@ -7,18 +7,30 @@ swap1=()=> {
     document.getElementById("friend").style.visibility = "hidden";
     document.getElementById("play").style.visibility = "visible";   };
 
+
+    let commandString = ""
+    let inventory ={
+        medicine:10
+
+    }
     let = items ={
         rope: 10,
         net: 10,
         medicine:10,
     }    
+    let eatJokes = ["hai", " no","find","don't eat"] 
+
+    let takeItem = (item) =>{
+        currentLocation.take 
+
+    }
     harbor ={
         look :"Nice place",
         north:"city",
         east:"ocean",
         south:"home",
         west: "land",
-        take:0
+        take:["phone","dept"]
     };
     land ={
         look:"There are shops around",
@@ -28,13 +40,11 @@ swap1=()=> {
         look:"init ending1"
     }
 
-    let currentLocation = harbor;
-
-
     let command=(input)=> { 
         switch (input) {
             case"look": case "where":
                 console.log(currentLocation.look);
+                console.log(currentLocation.take)
                     break;
             case "west":case "w":
              currentLocation.west
@@ -56,16 +66,31 @@ swap1=()=> {
 
                 break;
             case "take" :case "pick up" :case "pick":
-               
+                commandString += "take"
+                console.log("take what?")
+                //input
                 if (currentLocation.take == 0) { console.log("haii")}
-                else{  console.log("hello");
+                else{ takeItem(currentLocation.take);
                 }break;
+            case "eat $(x)" :
+                    commandString += "eat";
+                    console.log("eat what ?");
+                    //take spesifier object from player
+                    //code here
+                    //--------------------------------
+
+                console.log(eatJokes[Math.floor(Math.random()*4) ]);
+                    commandString = ""
+                break;
             default:
                 console.log("listen here you lil")
                 break;
         }
      
 };
+
+let currentLocation = harbor;
+
 
 harbor.north = city
 harbor.east = ocean
