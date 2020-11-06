@@ -1,12 +1,13 @@
+//make is submit by enter
+//window.addEventListener("keydown",commands(document.getElementById('txt1').value))
 
 const openLeft=()=> document.getElementById("leftBar").style.width = "25%";
 const  closeLeft=()=> document.getElementById("leftBar").style.width = "0";
-
-
 swap1=()=> {
     document.getElementById("friend").style.visibility = "hidden";
     document.getElementById("play").style.visibility = "visible";   };
 
+    let comm = document.getElementById('filename')
 
     let commandString = ""
     let inventory ={
@@ -40,11 +41,12 @@ swap1=()=> {
         look:"init ending1"
     }
 
-    let command=(input)=> { 
-        switch (input) {
+    let commands=(command)=> { 
+    
+        switch (command) {
             case"look": case "where":
                 console.log(currentLocation.look);
-                console.log(currentLocation.take)
+                console.log(currentLocation.take);
                     break;
             case "west":case "w":
              currentLocation.west
@@ -68,7 +70,7 @@ swap1=()=> {
             case "take" :case "pick up" :case "pick":
                 commandString += "take"
                 console.log("take what?")
-                //input
+                //comm
                 if (currentLocation.take == 0) { console.log("haii")}
                 else{ takeItem(currentLocation.take);
                 }break;
@@ -96,4 +98,4 @@ harbor.north = city
 harbor.east = ocean
 harbor.south = home
 harbor.west = land
-
+//remove the case statements
