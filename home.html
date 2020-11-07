@@ -27,11 +27,14 @@
 
   <div>
 <input id= "friend"class="native-hidden" type="checkbox" />
-<input name="textbox1" type="text" id="txt1"/>
-<input name="buttonExecute"  onclick="commands(document.getElementById('txt1').value)" type="button" value="Execute" aria-keyshortcuts="13" />
-
+<input name="textbox1"  type="text" id="txt1"/>
+<input name="buttonExecute"  onclick="commands(document.getElementById('txt1').value)" type="button" value="Execute" onkeypress="enter" />
 </div>
 <script src="script.js">  </script>
+<div><ul id="text-field">
+  <li>lorem imsum dolor sit amet consequer dor</li>
 
+</ul>
+</div>
 </body>
 </html>
