@@ -23,12 +23,23 @@
   <a href="#">Note 2</a>
   <a href="#">Note 3</a>
 </div></div>
+
+
 <span style="font-size:30px;cursor:pointer" onclick="openLeft()">&#9776; open</span>
 
   <div>
 <input id= "friend"class="native-hidden" type="checkbox" />
-<input name="textbox1"  type="text" id="txt1"/>
-<input name="buttonExecute"  onclick="commands(document.getElementById('txt1').value)" type="button" value="Execute" onkeypress="enter" />
+
+
+<form onsubmit="return false;" method="post" name="myForm">
+
+  <label>Name</label>
+  <input type="text" name="name" id="txt1" />
+
+  <input type="submit" name="submit" onclick="commands(document.getElementById(`txt1`).value)" />
+  
+</form>
+
 </div>
 <script src="script.js">  </script>
 <div><ul id="text-field">
