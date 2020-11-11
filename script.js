@@ -83,13 +83,10 @@ let items = [
 //takes command from the list and handles it
 //if there is command string, handles muliple words //work in progress
 let commandString =[]
-let commandArray
+let commandArray = []
     let commands=(command)=> { 
         document.getElementById("txt1").value = "";
         commandArray =command.split(` `);
-        if (commandArray[0]= "hello")
-       
-    
     if (commandString.length == 0){   
         switch (command) {
             case"look": case "where":
@@ -133,6 +130,20 @@ let commandArray
             case "inventory": case "i":
                 write(inventory)
             default:
+                if(commandArray.length= 2){
+                switch (commandArray[0]) {
+                    case "take": case "get": case "pick up":
+                        take(commandArray[1])
+                        write(commandArray[1] + " taken")
+                        break;
+                
+                    default:
+                        write("Sorry I don't understand") //sorry she won't understand ?, it would break her ?, must keep illusion, no wake up yet
+                        break;
+                }
+
+                }
+                
                 write("Sorry I don't understand")
                
                 break; }
