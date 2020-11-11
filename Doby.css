@@ -31,7 +31,12 @@ content: url(heart.png);}
     appearance: none;
 }
 
+#text-based{
+display: block;
+position: absolute;
 
+
+}
 .topBar{
 position: absolute;
 display: block;
