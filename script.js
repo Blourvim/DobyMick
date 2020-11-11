@@ -66,10 +66,15 @@ let items = [
     };
     land ={
         look:"There are shops around",
-        east: "harbor"
+        north:"",
+        east: "harbor",
+        south:"ocean",
+        west: "land",
+        visibleItems:[],
+        take:{}
     };
     city ={
-        look:"init ending1"
+        look:"Huge buildings lay upon you, you have "
     };
 
     let eatJokes = ["hai", " no","find","don't eat"] 
@@ -78,9 +83,13 @@ let items = [
 //takes command from the list and handles it
 //if there is command string, handles muliple words //work in progress
 let commandString =[]
-
+let commandArray
     let commands=(command)=> { 
-        document.getElementById("txt1").value = ""
+        document.getElementById("txt1").value = "";
+        commandArray =command.split(` `);
+        if (commandArray[0]= "hello")
+       
+    
     if (commandString.length == 0){   
         switch (command) {
             case"look": case "where":
