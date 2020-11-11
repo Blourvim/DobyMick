@@ -1,5 +1,29 @@
 
+//handles getting items
+let take=(item)=>{
+    switch (item) {
+        case "knife":
+            inventory.knife =(knife);
+            delete currentLocation.take.knife;
+            
+            break;
+    
+        default:
+            break;
+    }
+}
+let drop=(command)=>{
+    switch(command){
+       case "knife":
+        delete inventory.knife;
+        currentLocation.take.knife = knife
+ 
+    }
+
+
+}
 //Handles outputing text
+
 let write=(text)=> {
 const x = document.createElement("li");  
 const t = document.createTextNode(text); 
@@ -22,21 +46,23 @@ class item {
         this.state = state;
     };
 };
+
 //Game content
 let items = [
     knife = new item("knife", 0),
     medicine = new item("medicine", 1)
 ]
     medicine.description = "Big medicine"
-    let inventory = []
+    let inventory = {}
 
     harbor ={
         look :"Nice place",
         north:"city",
         east:"ocean",
-        south:"home",
+        south: "home",
         west: "land",
-        take:[knife.name ,medicine.name]
+        visibleItems:[],
+        take: {knife, medicine}
     };
     land ={
         look:"There are shops around",
@@ -59,7 +85,9 @@ let commandString =[]
         switch (command) {
             case"look": case "where":
                 write(currentLocation.look);
-                write(currentLocation.take);
+                write(Object.keys(currentLocation.take))
+           
+                
                     break;
             case "west":case "w": case "go west": 
              currentLocation = currentLocation.west
@@ -93,9 +121,8 @@ let commandString =[]
                 write("Drop what ?")
                 commandString = "drop"
                 break;
-            case items.keys:
-                write("yes")
-                break;
+            case "inventory": case "i":
+                write(inventory)
             default:
                 write("Sorry I don't understand")
                
@@ -104,20 +131,25 @@ let commandString =[]
         else{
                 switch (commandString) {
                     case "take": case "pickup":case "get":
-                        if([currentLocation.take][0].indexOf(command) != -1  ){  
-                            inventory.push(command); 
-                            commandString ="";       
-                            //command.state = 1;
-                            write(command + "taken")
-                            currentLocation.take                
+                        if(currentLocation.take[`${command}`]!= undefined ){  
+                        take(command);
+                        write(`You got ${command}`)
+                        commandString = "";
+                        
                         }
+                        
                         else {
                         write("there is no " + command +" to take")
                         commandString = ""}
                         break;
                     case "drop":
-                        inventory -= command;
-                        write(command + " was dropped");
+                        if(inventory[`${command}`]!= undefined){
+                            drop(command);
+                            write(command + " dropped");
+                            commandString = "";
+                        }
+
+                      
                     default:
                         break;
                 }
@@ -125,13 +157,6 @@ let commandString =[]
 
         
      
-};
-
-let take = (itemName)=>{
-    inventory.push(itemName)
-
-
-
 };
 
 
@@ -145,4 +170,3 @@ harbor.west = land;
 
 //Plans and notes
 //remove the case statements maybe ?
-
