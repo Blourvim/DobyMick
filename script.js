@@ -55,7 +55,7 @@ let write=(text)=> {
 const x = document.createElement("li");  
 const t = document.createTextNode(text); 
 x.appendChild(t);                                 
-document.getElementById("text-field").appendChild(x);                   
+document.getElementById("text-field").appendChild(x);
 }
 //command string to handle multiple word commands
 
@@ -107,6 +107,7 @@ let commandArray = []
     let commands=(command)=> { 
         document.getElementById("txt1").value = "";
         commandArray =command.split(` `);
+        write(">" + command);
     if (commandString.length == 0){   
         switch (command) {
             case"look": case "where": case "look around":
@@ -219,13 +220,10 @@ let commandArray = []
                         break;
                 }
         }
-    
-        
-     
 };
 
-
 let currentLocation = harbor;
+
 //needed to set room links at the end otherwise get initilization error
 //harbor.north = city;
 //harbor.east = ocean;
