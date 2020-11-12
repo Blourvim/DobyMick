@@ -192,7 +192,7 @@ let commandArray = []
                         break;
                 }  
             }
-                else                write("sorry she won't understand that")
+                else write("sorry she won't understand that")
 
                                
                 break; }
