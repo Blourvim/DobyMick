@@ -11,6 +11,8 @@ let take=(item)=>{
         default:
             break;
     }
+   
+
 }
 let drop=(command)=>{
     commandString = " ";
@@ -57,6 +59,13 @@ const t = document.createTextNode(text);
 x.appendChild(t);                                 
 document.getElementById("text-field").appendChild(x);                   
 }
+//menu stuff
+const openLeft=()=> document.getElementById("leftBar").style.width = "25%";
+const  closeLeft=()=> document.getElementById("leftBar").style.width = "0";
+swap1=()=> {
+    document.getElementById("friend").style.visibility = "hidden";
+    document.getElementById("play").style.visibility = "visible";   
+};
 //command string to handle multiple word commands
 
 //-item constructor
