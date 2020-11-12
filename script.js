@@ -7,7 +7,6 @@ let take=(item)=>{
             delete currentLocation.take.knife;
             
             break;
-    
         default:
             break;
     }
@@ -16,8 +15,29 @@ let drop=(command)=>{
     switch(command){
        case "knife":
         delete inventory.knife;
-        currentLocation.take.knife = knife
- 
+        currentLocation.take.knife = knife;
+    }
+}
+
+let use=(input)=>{
+switch (input) {
+    case "knife":
+        write("use knife on what ?")
+        
+        break;
+
+    default:
+        break;
+}
+}
+
+
+let useStationary=(input)=>{
+    switch(input){
+        case "atm":
+            write("It is out of service")
+            break;
+
     }
 
 
@@ -50,7 +70,8 @@ class item {
 //Game content
 let items = [
     knife = new item("knife", 0),
-    medicine = new item("medicine", 1)
+    medicine = new item("medicine", 1),
+    atm = new item("atm",1)
 ]
     medicine.description = "Big medicine"
     let inventory = {}
@@ -61,8 +82,8 @@ let items = [
         east:"ocean",
         south: "home",
         west: "land",
-        visibleItems:[],
-        take: {knife, medicine}
+        take: {knife, medicine},
+        useableItems: {atm},
     };
     land ={
         look:"There are shops around",
@@ -70,7 +91,6 @@ let items = [
         east: "harbor",
         south:"ocean",
         west: "land",
-        visibleItems:[],
         take:{}
     };
     city ={
@@ -89,7 +109,7 @@ let commandArray = []
         commandArray =command.split(` `);
     if (commandString.length == 0){   
         switch (command) {
-            case"look": case "where":
+            case"look": case "where": case "look around":
                 write(currentLocation.look);
                 write(Object.keys(currentLocation.take))
            
@@ -119,33 +139,49 @@ let commandArray = []
                 write(command + " what ?")
                 
                 break;
-            case "eat $(x)" :
+            case "eat" :
             write(eatJokes[Math.floor(Math.random()*4) ]);
-            write("write jokes")
-                break;
+            break;
             case "drop":
                 write("Drop what ?")
                 commandString = "drop"
                 break;
             case "inventory": case "i":
-                write(inventory)
+                if(Object.keys(inventory).length == 0){
+                    write("You carry nothing of value");
+                }
+                else write(Object.keys(inventory));
+
+                break;
+            case "use": 
+            write("use what ?")
+            //add stuff
+            break;
             default:
-                if(commandArray.length= 2){
+                if(commandArray.length == 2){
                 switch (commandArray[0]) {
                     case "take": case "get": case "pick up":
-                        take(commandArray[1])
-                        write(commandArray[1] + " taken")
+                        if(currentLocation.take[commandArray[1]] != undefined){ 
+                        take(commandArray[1]);
+                        write(commandArray[1] + " taken");
+                    }
+                        else write(commandArray[1] + " not getable");
+                    
                         break;
-                
+                    case "use":
+                        if(inventory[commandArray[1]] != undefined){
+                            use(commandArray[1]);
+                        }
+                        else if(currentLocation.useableItems[commandArray[1]] != undefined){ 
+                            useStationary(commandArray[1]);
+
+                        }
+                        break;
                     default:
                         write("Sorry I don't understand") //sorry she won't understand ?, it would break her ?, must keep illusion, no wake up yet
                         break;
-                }
-
-                }
-                
-                write("Sorry I don't understand")
-               
+                }  }
+                               
                 break; }
     }
         else{
@@ -155,9 +191,7 @@ let commandArray = []
                         take(command);
                         write(`You got ${command}`)
                         commandString = "";
-                        
                         }
-                        
                         else {
                         write("there is no " + command +" to take")
                         commandString = ""}
@@ -168,8 +202,6 @@ let commandArray = []
                             write(command + " dropped");
                             commandString = "";
                         }
-
-                      
                     default:
                         break;
                 }
@@ -181,11 +213,11 @@ let commandArray = []
 
 
 let currentLocation = harbor;
-//needed to set room links otherwise get initilization error
-harbor.north = city;
-harbor.east = ocean;
-harbor.south = home;
-harbor.west = land;
+//needed to set room links at the end otherwise get initilization error
+//harbor.north = city;
+//harbor.east = ocean;
+//harbor.south = home;
+//harbor.west = land;
 
 
 //Plans and notes
