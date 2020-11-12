@@ -1,6 +1,7 @@
 
 //handles getting items
 let take=(item)=>{
+    commandString = " ";
     switch (item) {
         case "knife":
             inventory.knife =(knife);
@@ -10,16 +11,21 @@ let take=(item)=>{
         default:
             break;
     }
+   
+
 }
 let drop=(command)=>{
+    commandString = " ";
     switch(command){
        case "knife":
         delete inventory.knife;
         currentLocation.take.knife = knife;
     }
+
 }
 
 let use=(input)=>{
+    commandString = " ";
 switch (input) {
     case "knife":
         write("use knife on what ?")
@@ -29,10 +35,13 @@ switch (input) {
     default:
         break;
 }
+
+
 }
 
 
 let useStationary=(input)=>{
+    commandString = " ";
     switch(input){
         case "atm":
             write("It is out of service")
@@ -154,6 +163,7 @@ let commandArray = []
 
                 break;
             case "use": 
+            commandString = "use"
             write("use what ?")
             //add stuff
             break;
@@ -180,7 +190,10 @@ let commandArray = []
                     default:
                         write("Sorry I don't understand") //sorry she won't understand ?, it would break her ?, must keep illusion, no wake up yet
                         break;
-                }  }
+                }  
+            }
+                else                write("sorry she won't understand that")
+
                                
                 break; }
     }
@@ -200,13 +213,22 @@ let commandArray = []
                         if(inventory[`${command}`]!= undefined){
                             drop(command);
                             write(command + " dropped");
-                            commandString = "";
                         }
+                    case "use":
+                        if(inventory[`${command}`] != undefined){
+                            use(command);
+                        }
+                        else if(currentLocation.useableItems[`${command}`] != undefined){
+                            useStationary(command);
+                        }
+                        else write(`sorry there is no ${command} to use` );
+                        break;
                     default:
+                        write("she won't understand that")
                         break;
                 }
         }
-
+    
         
      
 };
