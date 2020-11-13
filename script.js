@@ -117,6 +117,7 @@ let commandArray = []
         document.getElementById("txt1").value = "";
         commandArray =command.split(` `);
         write(">" + command);
+        console.log("working"+ command);
     if (commandString.length == 0){   
         switch (command) {
             case"look": case "where": case "look around":
