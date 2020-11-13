@@ -41,7 +41,7 @@
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
         >&times;</a
       >
-      <a href="#">One</a>
+      <a onclick="swap(toWhale)" href="#">One</a>
       <a href="#">Two</a>
       <a href="#">Three</a>
       <a href="#">Four</a>
@@ -59,22 +59,14 @@
       <div id="text-field"></div>
 
     <form onsubmit="return false;" method="post" name="play-area">  
+      >
       <input id="txt1"type="text" name="play-area" autocomplete="off"  />
       <input style="display: none;" type="submit" name="submit" onclick="commands(document.getElementById(`txt1`).value)" />
     </form>
     </div>
     <!-- navigator script -->
-    <script>
-      const openNav=()=> {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-      }
-
-      const closeNav=()=> {
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("main").style.marginLeft = "0";
-      }
-    </script>
+    <script src="navigation.js"></script>
+    
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,7 +1,7 @@
 
 //handles getting items
 let take=(item)=>{
-    commandString = " ";
+    commandHistory = "";
     switch (item) {
         case "knife":
             inventory.knife =(knife);
@@ -15,7 +15,7 @@ let take=(item)=>{
 
 }
 let drop=(command)=>{
-    commandString = " ";
+    commandHistory = "";
     switch(command){
        case "knife":
         delete inventory.knife;
@@ -25,12 +25,11 @@ let drop=(command)=>{
 }
 
 let use=(input)=>{
-    commandString = " ";
+    commandHistory = "";
 switch (input) {
     case "knife":
         write("use knife on what ?")
-        
-        break;
+         break;
 
     default:
         break;
@@ -41,7 +40,7 @@ switch (input) {
 
 
 let useStationary=(input)=>{
-    commandString = " ";
+    commandHistory = "";
     switch(input){
         case "atm":
             write("It is out of service")
@@ -56,8 +55,10 @@ let useStationary=(input)=>{
 let write=(text)=> {
 const x = document.createElement("li");  
 const t = document.createTextNode(text); 
-x.appendChild(t);                                 
-document.getElementById("text-field").appendChild(x);
+x.appendChild(t);  
+const textField = document.getElementById("text-field")                               
+textField.appendChild(x);
+textField.scrollTop = textField.scrollHeight;
 }
 //menu stuff
 const openLeft=()=> document.getElementById("leftBar").style.width = "25%";
@@ -111,14 +112,11 @@ let items = [
 //Main gameplay handler
 //takes command from the list and handles it
 //if there is command string, handles muliple words //work in progress
-let commandString =[]
-let commandArray = []
+let commandHistory =[]
     let commands=(command)=> { 
         document.getElementById("txt1").value = "";
-        commandArray =command.split(` `);
         write(">" + command);
-        console.log("working"+ command);
-    if (commandString.length == 0){   
+    if (commandHistory.length == 0){   
         switch (command) {
             case"look": case "where": case "look around":
                 write(currentLocation.look);
@@ -146,7 +144,7 @@ let commandArray = []
 
                 break;
             case "take" :case "pick up" :case "pick":
-                commandString += "take"
+                commandHistory = "take"
                 write(command + " what ?")
                 
                 break;
@@ -155,7 +153,7 @@ let commandArray = []
             break;
             case "drop":
                 write("Drop what ?")
-                commandString = "drop"
+                commandHistory = "drop"
                 break;
             case "inventory": case "i":
                 if(Object.keys(inventory).length == 0){
@@ -165,29 +163,29 @@ let commandArray = []
 
                 break;
             case "use": 
-            commandString = "use"
-            write("use what ?")
-            //add stuff
+                commandHistory = "use"
+                write("use what ?")
             break;
             default:
-                if(commandArray.length == 2){
-                switch (commandArray[0]) {
+                if(command.split(` `).length == 2){
+                switch (command.split(` `)[0]) {
                     case "take": case "get": case "pick up":
-                        if(currentLocation.take[commandArray[1]] != undefined){ 
-                        take(commandArray[1]);
-                        write(commandArray[1] + " taken");
+                        if(currentLocation.take[command.split(` `)[1]] != undefined){ 
+                        take(command.split(` `)[1]);
+                        write(command.split(` `)[1] + " taken");
                     }
-                        else write(commandArray[1] + " not getable");
+                        else write(command.split(` `)[1] + " not getable");
                     
                         break;
                     case "use":
-                        if(inventory[commandArray[1]] != undefined){
-                            use(commandArray[1]);
+                        if(inventory[command.split(` `)[1]] != undefined){
+                            use(command.split(` `)[1]);
                         }
-                        else if(currentLocation.useableItems[commandArray[1]] != undefined){ 
-                            useStationary(commandArray[1]);
+                        else if(currentLocation.useableItems[command.split(` `)[1]] != undefined){ 
+                            useStationary(command.split(` `)[1]);
 
                         }
+                        else write("not possible")
                         break;
                     default:
                         write("Sorry I don't understand") //sorry she won't understand ?, it would break her ?, must keep illusion, no wake up yet
@@ -200,16 +198,16 @@ let commandArray = []
                 break; }
     }
         else{
-                switch (commandString) {
+                switch (commandHistory) {
                     case "take": case "pickup":case "get":
                         if(currentLocation.take[`${command}`]!= undefined ){  
                         take(command);
                         write(`You got ${command}`)
-                        commandString = "";
+                        commandHistory = "";
                         }
                         else {
                         write("there is no " + command +" to take")
-                        commandString = ""}
+                        commandHistory = ""}
                         break;
                     case "drop":
                         if(inventory[`${command}`]!= undefined){
@@ -223,7 +221,8 @@ let commandArray = []
                         else if(currentLocation.useableItems[`${command}`] != undefined){
                             useStationary(command);
                         }
-                        else write(`sorry there is no ${command} to use` );
+                        else write(`sorry there is no ${command} to use` ); commandHistory = ""
+
                         break;
                     default:
                         write("she won't understand that")
@@ -243,3 +242,9 @@ let currentLocation = harbor;
 
 //Plans and notes
 //remove the case statements maybe ?
+
+
+//code reform concept for cleaner code
+//swtich command.split(` `)[0]
+//case use:
+//if command.split(` `)[1] != undefined

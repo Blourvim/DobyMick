@@ -42,14 +42,25 @@ background-color:pink;
 overflow-x: hidden;
 max-width: 80%;
 width: 40rem;
-height: 35rem;
+height: 33rem;
 overflow-y: auto;
 margin: auto;
 list-style-type: none;
 text-align: left;
 padding-left: 8px;
 border-radius: 4px;
+font-size: 1.2rem;
 
+}
+#txt1{
+  background-color: #eeeded;
+  width: 35rem;
+  height: 100%;
+  color: #394867;
+  padding-top: 1rem;
+  border: 2px solid #39486790;
+  border-style: none none solid none;
+  font-size: 1.2rem;
 }
 /* navigator */
 .sidenav {
