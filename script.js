@@ -1,5 +1,5 @@
 
-//handles getting items
+//handles interaction with items
 let take=(item)=>{
     commandHistory = "";
     switch (item) {
@@ -18,8 +18,8 @@ let drop=(command)=>{
     commandHistory = "";
     switch(command){
        case "knife":
-        delete inventory.knife;
-        currentLocation.take.knife = knife;
+            delete inventory.knife;
+            currentLocation.take.knife = knife;
     }
 
 }
@@ -36,7 +36,7 @@ switch (input) {
 }
 
 
-}
+};
 
 
 let useStationary=(input)=>{
@@ -49,25 +49,17 @@ let useStationary=(input)=>{
     }
 
 
-}
+};
 //Handles outputing text
 
 let write=(text)=> {
-const x = document.createElement("li");  
-const t = document.createTextNode(text); 
-x.appendChild(t);  
-const textField = document.getElementById("text-field")                               
-textField.appendChild(x);
-textField.scrollTop = textField.scrollHeight;
-}
-//menu stuff
-const openLeft=()=> document.getElementById("leftBar").style.width = "25%";
-const  closeLeft=()=> document.getElementById("leftBar").style.width = "0";
-swap1=()=> {
-    document.getElementById("friend").style.visibility = "hidden";
-    document.getElementById("play").style.visibility = "visible";   
+    const x = document.createElement("li");  
+    const t = document.createTextNode(text); 
+    x.appendChild(t);  
+    const textField = document.getElementById("text-field")                               
+    textField.appendChild(x);
+    textField.scrollTop = textField.scrollHeight;
 };
-//command string to handle multiple word commands
 
 //-item constructor
 class item {
@@ -82,9 +74,9 @@ let items = [
     knife = new item("knife", 0),
     medicine = new item("medicine", 1),
     atm = new item("atm",1)
-]
-    medicine.description = "Big medicine"
-    let inventory = {}
+];
+    medicine.description = "Big medicine";
+    let inventory = {};
 
     harbor ={
         look :"Nice place",
@@ -107,55 +99,68 @@ let items = [
         look:"Huge buildings lay upon you, you have "
     };
 
-    let eatJokes = ["hai", " no","find","don't eat"] 
+
+    //Handles one word commands such as use, //use what ?
+     let commandHistory =[]
 
 //Main gameplay handler
 //takes command from the list and handles it
-//if there is command string, handles muliple words //work in progress
-let commandHistory =[]
+
     let commands=(command)=> { 
         document.getElementById("txt1").value = "";
         write(">" + command);
     if (commandHistory.length == 0){   
         switch (command) {
             case"look": case "where": case "look around":
+
                 write(currentLocation.look);
                 write(Object.keys(currentLocation.take))
-           
-                
-                    break;
+
+                break;
             case "west":case "w": case "go west": 
+
              currentLocation = currentLocation.west
              write(currentLocation.look);
-             break;
+
+                break;
             case "east": case "e": case "go east": 
+
                 currentLocation = currentLocation.east
                 write(currentLocation.look);
 
                 break;
             case "south":case "s": case "go south":
+
                 currentLocation = currentLocation.south
                 write(currentLocation.look);
 
                 break;
             case "north" :case "n":case "go north":
+
                 currentLocation = currentLocation.north
                 write(currentLocation.look);
 
                 break;
             case "take" :case "pick up" :case "pick":
+
                 commandHistory = "take"
                 write(command + " what ?")
-                
+        
                 break;
             case "eat" :
+
+            let eatJokes = ["hai", " no","find","don't eat"] ;
             write(eatJokes[Math.floor(Math.random()*4) ]);
+
             break;
             case "drop":
+
                 write("Drop what ?")
                 commandHistory = "drop"
+
                 break;
             case "inventory": case "i":
+
                 if(Object.keys(inventory).length == 0){
                     write("You carry nothing of value");
                 }
@@ -163,25 +168,33 @@ let commandHistory =[]
 
                 break;
             case "use": 
+
                 commandHistory = "use"
                 write("use what ?")
-            break;
+
+                break;
+            case "clear":case "clr":case "cls":
+
+                document.getElementById("text-field").innerHTML =" "  
+
+                break;
+
             default:
                 if(command.split(` `).length == 2){
-                switch (command.split(` `)[0]) {
-                    case "take": case "get": case "pick up":
-                        if(currentLocation.take[command.split(` `)[1]] != undefined){ 
+            switch (command.split(` `)[0]) {
+                case "take": case "get": case "pick up":
+                    if(currentLocation.take[command.split(` `)[1]] != undefined){ 
                         take(command.split(` `)[1]);
                         write(command.split(` `)[1] + " taken");
                     }
-                        else write(command.split(` `)[1] + " not getable");
+                    else write(command.split(` `)[1] + " not getable");
                     
                         break;
-                    case "use":
+                case "use":
                         if(inventory[command.split(` `)[1]] != undefined){
                             use(command.split(` `)[1]);
                         }
-                        else if(currentLocation.useableItems[command.split(` `)[1]] != undefined){ 
+                   else if(currentLocation.useableItems[command.split(` `)[1]] != undefined){ 
                             useStationary(command.split(` `)[1]);
 
                         }
@@ -190,12 +203,13 @@ let commandHistory =[]
                     default:
                         write("Sorry I don't understand") //sorry she won't understand ?, it would break her ?, must keep illusion, no wake up yet
                         break;
-                }  
-            }
-                else write("sorry she won't understand that")
+                         }  
+                        }
+                     else write("sorry she won't understand that")
 
                                
-                break; }
+                break; 
+            }
     }
         else{
                 switch (commandHistory) {
@@ -248,3 +262,10 @@ let currentLocation = harbor;
 //swtich command.split(` `)[0]
 //case use:
 //if command.split(` `)[1] != undefined
+
+
+let displayMap=()=>{
+    
+
+
+}

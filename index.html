@@ -42,8 +42,8 @@
         >&times;</a
       >
       <a onclick ="swap(document.getElementById(`text-based`))"  href="#">Text Based</a>
-      <a onclick ="swap(document.getElementById(`pictures`))" href="#">Two</a>
-      <a href="#">Three</a>
+      <a onclick ="swap(document.getElementById(`pictures`))" href="#">Pictures</a>
+      <a onclick ="swap(document.getElementById(`clicker`))" href="#">Clicker</a>
       <a href="#">Four</a>
     </div>
 
@@ -64,9 +64,11 @@
       <input style="display: none;" type="submit" name="submit" onclick="commands(document.getElementById(`txt1`).value)" />
     </form>
     </div>
-    <!-- navigator script -->
+    <div id="clicker" >
+        <button onclick="click()"></button>
+
+    </div>
     <script src="navigation.js"></script>
-    
     <script src="script.js"></script>
   </body>
 </html>
