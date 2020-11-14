@@ -262,10 +262,31 @@ let currentLocation = harbor;
 //swtich command.split(` `)[0]
 //case use:
 //if command.split(` `)[1] != undefined
+let fuel = 200;
+let sail =(power) => {
+fuel -= Math.floor(0.01*slider.value);
+console.log(fuel + "fuel" + power)
 
 
-let displayMap=()=>{
-    
-
+let movement; //name of interval
 
 }
+let shipState = false;
+let startShip=()=>{
+    if(shipState == false){   
+    document.getElementById("engine").innerHTML = "Stop ship" 
+    console.log("working")
+    shipState = true 
+    movement = setInterval(sail , 1000, "hello")
+}
+    else {document.getElementById("engine").innerHTML = "Start Ship"
+    shipState = false
+    console.log("stop");
+    clearInterval(movement);
+}}
+
+let slider = document.getElementById("gas")
+let gauge = document.getElementById("gauge")
+gauge.innerHTML = slider.value;
+slider.oninput = function() {
+    gauge.innerHTML = this.value};

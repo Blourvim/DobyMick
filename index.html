@@ -52,10 +52,10 @@
         ><img src="whale3.png" alt="whale"
       /></span>
     </div>
-    <div id="pictures"class="image-panel">
+    <div style="display: none;" id="pictures"class="image-panel">
       <img src="dobyM.jpg" alt="doby" />
     </div>
-    <div id="text-based">
+    <div style="display: none;" id="text-based">
       <div id="text-field"></div>
 
     <form onsubmit="return false;" method="post" name="play-area">  
@@ -64,8 +64,10 @@
       <input style="display: none;" type="submit" name="submit" onclick="commands(document.getElementById(`txt1`).value)" />
     </form>
     </div>
-    <div id="clicker" >
-        <button onclick="click()"></button>
+    <div style="display: block;" id="clicker" >
+        <button id="engine" onclick="startShip()">Start Ship</button>
+        <input type="range" min="0" max="100" value="0" class="slider" id="gas">
+        <h2 id="gauge"></h2>
 
     </div>
     <script src="navigation.js"></script>
