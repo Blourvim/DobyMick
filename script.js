@@ -1,4 +1,3 @@
-
 //handles interaction with items
 let take=(item)=>{
     commandHistory = "";
@@ -262,22 +261,34 @@ let currentLocation = harbor;
 //swtich command.split(` `)[0]
 //case use:
 //if command.split(` `)[1] != undefined
-let fuel = 200;
-let sail =(power) => {
-fuel -= Math.floor(0.01*slider.value);
-console.log(fuel + "fuel" + power)
+const directionNames = ["N","NE","E","SE","S","SW","W","NW","N"]
+const direction4x =["+2"]
+const direction4y =["+2"]
+let shipInfo = {
+fuel: 200,
+x : 0,
+y : 0,
+direction:"west",
+directionValue: 0,
+}
+let directionText = document.getElementById("direction-text")
 
-
+const sail =(power) => {
+shipInfo.fuel -= Math.floor(0.01*gasSlider.value);
+console.log(shipInfo.fuel + "fuel" + power);
+console.log(shipInfo.x +" " + shipInfo.y);
+directionText.innerHTML =directionNames[Math.round(shipInfo.directionValue/45)]
+console.log(directionNames[Math.round(shipInfo.directionValue/45)])
+}
 let movement; //name of interval
 
-}
 let shipState = false;
-let startShip=()=>{
+const startShip=()=>{
     if(shipState == false){   
     document.getElementById("engine").innerHTML = "Stop ship" 
     console.log("working")
     shipState = true 
-    movement = setInterval(sail , 1000, "hello")
+    movement = setInterval(sail , 1000, gasSlider.value)
 }
     else {document.getElementById("engine").innerHTML = "Start Ship"
     shipState = false
@@ -285,8 +296,15 @@ let startShip=()=>{
     clearInterval(movement);
 }}
 
-let slider = document.getElementById("gas")
-let gauge = document.getElementById("gauge")
-gauge.innerHTML = slider.value;
-slider.oninput = function() {
+const gasSlider = document.getElementById("gas");
+const gauge = document.getElementById("gauge");
+gauge.innerHTML = gasSlider.value;
+gasSlider.oninput = function() {
     gauge.innerHTML = this.value};
+
+const shipWheelSlider = document.getElementById("wheel");
+const direction = document.getElementById("direction");
+shipWheelSlider.oninput = function(){
+    direction.innerHTML = shipWheelSlider.value;
+    shipInfo.directionValue = shipWheelSlider.value;
+}
