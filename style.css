@@ -149,3 +149,20 @@ font-size: 1.2rem;
 #clicker{
 font-size: 2rem;
 }
+
+#fuel-tank{
+
+height: 15rem;
+width: 5rem;
+background-color: red;
+display: block;
+margin-left: 20rem;
+}
+
+#fuel{
+display: block;
+background-color: royalblue;
+height: 100%;
+width: 5rem;
+
+}

@@ -1,4 +1,3 @@
-//handles interaction with items
 let take = (item) => {
   commandHistory = "";
   switch (item) {
@@ -254,7 +253,7 @@ const directionNames = ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"];
 const direction4x = [0, +2, +2, 2, 0, -2, -2, -2, 0];
 const direction4y = [+2, +2, 0, -2, -2, -2, 0, +2, +2];
 let shipInfo = {
-  fuel: 200,
+  fuel: 100,
   x: 0,
   y: 0,
   direction: "west",
@@ -263,34 +262,42 @@ let shipInfo = {
 let directionText = document.getElementById("direction-text");
 
 const sail = (power) => {
-  shipInfo.fuel -= Math.floor(0.01 * gasSlider.value);
-  console.log(shipInfo.fuel + "fuel" + power);
-  //adds cords
-  shipInfo.x += Math.floor(
-    direction4x[Math.round(shipInfo.directionValue / 45)] *
-      (gasSlider.value * 0.1)
-  );
-  shipInfo.y += Math.floor(
-    direction4y[Math.round(shipInfo.directionValue / 45)] *
-      (gasSlider.value * 0.1)
-  );
-
+  if (shipInfo.fuel  >0) {
+    shipInfo.fuel = shipInfo.fuel - gasSlider.value;
+    console.log(gasSlider.value + "gasSlider.value");
+    console.log(shipInfo.fuel + "fuel" + gasSlider.value);
+    //adds cords
+    shipInfo.x += Math.floor(
+      direction4x[Math.round(shipInfo.directionValue / 45)] *
+        (gasSlider.value * 0.1)
+    );
+    shipInfo.y += Math.floor(
+      direction4y[Math.round(shipInfo.directionValue / 45)] *
+        (gasSlider.value * 0.1)
+    );
+  } else {
+    shipState = false;
+    document.getElementById("engine").innerHTML = "Start Ship";
+    clearInterval(movement);
+    alert("out")
+  }
   //display stuff
   console.log(shipInfo.x + " " + shipInfo.y);
   directionText.innerHTML =
     directionNames[Math.round(shipInfo.directionValue / 45)];
   console.log(directionNames[Math.round(shipInfo.directionValue / 45)]);
+  document.getElementById("fuel").style.height = `${shipInfo.fuel}%`;
 };
 let movement; //name of interval
 
 let shipState = false;
 const startShip = () => {
-  if (shipState == false) {
+  if (shipState == false && shipInfo.fuel != 0) {
     document.getElementById("engine").innerHTML = "Stop ship";
     console.log("working");
     shipState = true;
     movement = setInterval(sail, 1000, gasSlider.value);
-  } else {
+  } else if (shipState == true) {
     document.getElementById("engine").innerHTML = "Start Ship";
     shipState = false;
     console.log("stop");

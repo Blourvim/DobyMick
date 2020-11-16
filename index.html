@@ -41,9 +41,13 @@
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
         >&times;</a
       >
-      <a onclick ="swap(document.getElementById(`text-based`))"  href="#">Text Based</a>
-      <a onclick ="swap(document.getElementById(`pictures`))" href="#">Pictures</a>
-      <a onclick ="swap(document.getElementById(`clicker`))" href="#">Clicker</a>
+      <a onclick="swap(document.getElementById(`text-based`))" href="#"
+        >Text Based</a
+      >
+      <a onclick="swap(document.getElementById(`pictures`))" href="#"
+        >Pictures</a
+      >
+      <a onclick="swap(document.getElementById(`clicker`))" href="#">Clicker</a>
       <a href="#">Four</a>
     </div>
 
@@ -52,27 +56,44 @@
         ><img src="whale3.png" alt="whale"
       /></span>
     </div>
-    <div style="display: none;" id="pictures"class="image-panel">
+    <div style="display: none" id="pictures" class="image-panel">
       <img src="dobyM.jpg" alt="doby" />
     </div>
-    <div style="display: none;" id="text-based">
+    <div style="display: none" id="text-based">
       <div id="text-field"></div>
 
-    <form onsubmit="return false;" method="post" name="play-area">  
-      >
-      <input id="txt1"type="text" name="play-area" autocomplete="off"  />
-      <input style="display: none;" type="submit" name="submit" onclick="commands(document.getElementById(`txt1`).value)" />
-    </form>
+      <form onsubmit="return false;" method="post" name="play-area">
+        >
+        <input id="txt1" type="text" name="play-area" autocomplete="off" />
+        <input
+          style="display: none"
+          type="submit"
+          name="submit"
+          onclick="commands(document.getElementById(`txt1`).value)"
+        />
+      </form>
     </div>
-    <div style="display: block;" id="clicker" >
-        <button id="engine" onclick="startShip()">Start Ship</button>
-        <input type="range" min="0" max="100" value="0" class="slider" id="gas">
-        <h2 id="gauge"></h2>
-          <h1>--------------</h1>
-          <input type="range" min="0" max="360" value="0" class="slider" id="wheel">
-          <h2 id="direction">direction-degrees</h2>
-          <h2 id="direction-text">direciton-text</h2>
+    <div style="display: block" id="clicker">
+      <button id="engine" onclick="startShip()">Start Ship</button>
+      <input type="range" min="0" max="10" value="0" class="slider" id="gas" />
+      <h2 id="gauge"></h2>
+      <h1>--------------</h1>
+      <input
+        type="range"
+        min="0"
+        max="360"
+        value="0"
+        class="slider"
+        id="wheel"
+      />
+      <h2 id="direction">direction-degrees</h2>
+      <h2 id="direction-text">direciton-text</h2>
+      <div id="fuel-tank">
+        <div id="fuel"></div>
+  
+      </div>
     </div>
+    
     <script src="navigation.js"></script>
     <script src="script.js"></script>
   </body>
