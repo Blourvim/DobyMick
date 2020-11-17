@@ -7,7 +7,7 @@ let take = (item) => {
 
       break;
     default:
-      write("yay you found an error")
+      write("yay you found an error");
       break;
   }
 };
@@ -263,16 +263,20 @@ let shipInfo = {
   directionValue: 0,
 };
 let ahoy = () => {
+  //handles rng every call
   let rng = Math.random() * (100 - 1) + 1;
   if (rng > 80) {
     windState = true;
     windDirection = Math.floor(Math.random() * (9 - 0) + 0);
     console.log("change direction" + directionNames[windDirection]);
+    document.getElementById("wind").innerHTML =
+      directionNames[windDirection] + "  wind";
   } else if (rng < 20) {
     windState = false;
     console.log("no wind");
+    document.getElementById("wind").innerHTML = "no wind";
   }
-
+  //engine
   if (engineState == true) {
     if (shipInfo.fuel > 0) {
       shipInfo.fuel -= gasSlider.value;
@@ -293,12 +297,22 @@ let ahoy = () => {
       alert("out");
     }
   }
+
+  //sailing
   if (sailState == true) {
     if (windState == true) {
-      shipInfo.x += direction4x[windDirection];
-      shipInfo.y += direction4y[windDirection];
+      if (sailSlider.value == windDirection) {
+        shipInfo.x += direction4x[windDirection] * 10;
+        shipInfo.y += direction4y[windDirection] * 10;
+      }
+    } else {
     }
+  } else {
+    shipInfo.x += direction4x[windDirection];
+    shipInfo.y += direction4y[windDirection];
   }
+  document.getElementById("coordinates").innerHTML =
+    directionNames[windDirection] + shipInfo.x + "  " + shipInfo.y;
   console.log(shipInfo.x + "-" + shipInfo.y);
 };
 
@@ -332,6 +346,13 @@ const gauge = document.getElementById("gauge");
 gauge.innerHTML = gasSlider.value;
 gasSlider.oninput = function () {
   gauge.innerHTML = this.value;
+};
+//sail slider
+const sailSlider = document.getElementById("sail");
+const sailAngle = document.getElementById("sail-angle");
+sailAngle.innerHTML = sailSlider.value;
+sailSlider.oninput = function () {
+  sailAngle.innerHTML = this.value;
 };
 
 let engineState = false;
