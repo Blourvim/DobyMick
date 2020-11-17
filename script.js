@@ -7,6 +7,7 @@ let take = (item) => {
 
       break;
     default:
+      write("yay you found an error")
       break;
   }
 };
@@ -249,6 +250,8 @@ let currentLocation = harbor;
 //swtich command.split(` `)[0]
 //case use:
 //if command.split(` `)[1] != undefined
+let windState = true;
+let windDirection = 2;
 const directionNames = ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"];
 const direction4x = [0, +2, +2, 2, 0, -2, -2, -2, 0];
 const direction4y = [+2, +2, 0, -2, -2, -2, 0, +2, +2];
@@ -259,52 +262,71 @@ let shipInfo = {
   direction: "west",
   directionValue: 0,
 };
-let directionText = document.getElementById("direction-text");
-
-const sail = (power) => {
-  if (shipInfo.fuel  >0) {
-    shipInfo.fuel = shipInfo.fuel - gasSlider.value;
-    console.log(gasSlider.value + "gasSlider.value");
-    console.log(shipInfo.fuel + "fuel" + gasSlider.value);
-    //adds cords
-    shipInfo.x += Math.floor(
-      direction4x[Math.round(shipInfo.directionValue / 45)] *
-        (gasSlider.value * 0.1)
-    );
-    shipInfo.y += Math.floor(
-      direction4y[Math.round(shipInfo.directionValue / 45)] *
-        (gasSlider.value * 0.1)
-    );
-  } else {
-    shipState = false;
-    document.getElementById("engine").innerHTML = "Start Ship";
-    clearInterval(movement);
-    alert("out")
+let ahoy = () => {
+  let rng = Math.random() * (100 - 1) + 1;
+  if (rng > 80) {
+    windState = true;
+    windDirection = Math.floor(Math.random() * (9 - 0) + 0);
+    console.log("change direction" + directionNames[windDirection]);
+  } else if (rng < 20) {
+    windState = false;
+    console.log("no wind");
   }
-  //display stuff
-  console.log(shipInfo.x + " " + shipInfo.y);
+
+  if (engineState == true) {
+    if (shipInfo.fuel > 0) {
+      shipInfo.fuel -= gasSlider.value;
+      //handles cordinatess
+      shipInfo.x += Math.floor(
+        direction4x[Math.round(shipInfo.directionValue / 45)] *
+          (gasSlider.value * 0.1)
+      );
+      shipInfo.y += Math.floor(
+        direction4y[Math.round(shipInfo.directionValue / 45)] *
+          (gasSlider.value * 0.1)
+      );
+      document.getElementById("fuel").style.height = `${shipInfo.fuel}%`;
+    } else {
+      shipInfo.fuel = 0;
+      engineState = false;
+      document.getElementById("engine").innerHTML = "Start Ship";
+      alert("out");
+    }
+  }
+  if (sailState == true) {
+    if (windState == true) {
+      shipInfo.x += direction4x[windDirection];
+      shipInfo.y += direction4y[windDirection];
+    }
+  }
+  console.log(shipInfo.x + "-" + shipInfo.y);
+};
+
+let directionText = document.getElementById("direction-text");
+let movement; //name of interval
+movement = setInterval(ahoy, 1000, "engine");
+
+let sailState = false;
+const sailButton = document.getElementById("sail-button");
+let sail = () => {
+  if (sailState == false) {
+    sailButton.innerHTML = "Sail Up";
+    sailState = true;
+  } else {
+    sailButton.innerHTML = "Drop Sails";
+    sailState = false;
+  }
+};
+//slider with controls and display direction name
+const shipWheelSlider = document.getElementById("wheel");
+const direction = document.getElementById("direction");
+shipWheelSlider.oninput = function () {
+  direction.innerHTML = shipWheelSlider.value;
+  shipInfo.directionValue = shipWheelSlider.value;
   directionText.innerHTML =
     directionNames[Math.round(shipInfo.directionValue / 45)];
-  console.log(directionNames[Math.round(shipInfo.directionValue / 45)]);
-  document.getElementById("fuel").style.height = `${shipInfo.fuel}%`;
 };
-let movement; //name of interval
-
-let shipState = false;
-const startShip = () => {
-  if (shipState == false && shipInfo.fuel != 0) {
-    document.getElementById("engine").innerHTML = "Stop ship";
-    console.log("working");
-    shipState = true;
-    movement = setInterval(sail, 1000, gasSlider.value);
-  } else if (shipState == true) {
-    document.getElementById("engine").innerHTML = "Start Ship";
-    shipState = false;
-    console.log("stop");
-    clearInterval(movement);
-  }
-};
-
+//gas slider
 const gasSlider = document.getElementById("gas");
 const gauge = document.getElementById("gauge");
 gauge.innerHTML = gasSlider.value;
@@ -312,9 +334,15 @@ gasSlider.oninput = function () {
   gauge.innerHTML = this.value;
 };
 
-const shipWheelSlider = document.getElementById("wheel");
-const direction = document.getElementById("direction");
-shipWheelSlider.oninput = function () {
-  direction.innerHTML = shipWheelSlider.value;
-  shipInfo.directionValue = shipWheelSlider.value;
+let engineState = false;
+const startEngine = () => {
+  if (engineState == false && shipInfo.fuel != 0) {
+    document.getElementById("engine").innerHTML = "Stop ship";
+    console.log("working");
+    engineState = true;
+  } else if (engineState == true) {
+    document.getElementById("engine").innerHTML = "Start Ship";
+    engineState = false;
+    console.log("stop");
+  }
 };
