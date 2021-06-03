@@ -1,3 +1,5 @@
+
+
 let take = (item) => {
   commandHistory = "";
   switch (item) {
@@ -11,6 +13,12 @@ let take = (item) => {
       break;
   }
 };
+
+
+
+const takeNew=(item)=>{
+  console.error('hiiiiii')
+ }
 let drop = (command) => {
   commandHistory = "";
   switch (command) {
@@ -69,7 +77,9 @@ medicine.description = "Big medicine";
 let inventory = {};
 
 harbor = {
-  look: "Nice place",
+  look: `It is a nice place, during this time of the day, no ship is here, your ship and child awaits you in the 
+  east, from far in the south, you see your home, to the west is the beach that goes as long as your eye can see,
+  back north is the city, where you might be able to shop before your journey`,
   north: "city",
   east: "ocean",
   south: "home",
